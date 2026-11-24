@@ -1,0 +1,28 @@
+# הרצה מקומית של השרת יחד עם MongoDB:
+#   docker compose up -d --build
+# ב-Railway כל service כאן הופך לשירות נפרד.
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - MONGO_URL=mongodb://mongo:27017
+    # מחכים ש-MongoDB יהיה מוכן לקבל חיבורים
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:8
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 2s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mongo-data:
