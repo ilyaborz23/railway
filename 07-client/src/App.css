@@ -55,3 +55,5 @@ li {
 li span { flex: 1; }
 li.done span { text-decoration: line-through; color: #9b97ad; }
 li button { background: #ff6b57; padding: 6px 12px; font-size: 13px; }
+
+.counter { font-weight: 600; color: #7c4dff; margin: 8px 0 0; }

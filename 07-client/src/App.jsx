@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react'
 // מקומית: קובץ .env, ב-Railway: Variables של שירות הקליינט.
 const API = import.meta.env.VITE_API_URL
 
+// תרגיל 1: כותרת מהמשתנים. אם המשתנה לא מוגדר - כותרת ברירת מחדל.
+const TITLE = import.meta.env.VITE_TITLE || 'המשימות שלי'
+
 export default function App() {
   const [tasks, setTasks] = useState([])
   const [title, setTitle] = useState('')
@@ -41,10 +44,14 @@ export default function App() {
     load()
   }
 
+  // תרגיל 2: כמה משימות נשארו לבצע
+  const remaining = tasks.filter(t => !t.done).length
+
   return (
     <main>
-      <h1>המשימות שלי</h1>
+      <h1>{TITLE}</h1>
       <p className="api">API: {API}</p>
+      <p className="counter">נשארו לבצע: {remaining} מתוך {tasks.length}</p>
 
       <form onSubmit={addTask}>
         <input value={title} onChange={e => setTitle(e.target.value)} placeholder="משימה חדשה" />
